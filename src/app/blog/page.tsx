@@ -24,7 +24,7 @@ export default function BlogPage() {
 
           <div className="mt-10 max-w-3xl space-y-6 text-base leading-relaxed text-gray-400 sm:text-lg">
             <p>
-              AI, ML, NLP, computer vision and audio processing — I don't just experiment, I build systems that solve real-world problems and push beyond the expected.
+              AI, ML, NLP, computer vision and audio processing — I don&apos;t just experiment, I build systems that solve real-world problems and push beyond the expected.
             </p>
             <p>
               I move fast, think deeply, and turn ideas into scalable, production-ready solutions. This space is where I break down how I think, how I build, and how I aim for the top — because average was never the goal.
