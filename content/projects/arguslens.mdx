@@ -1,0 +1,46 @@
+---
+title: "ArgusLens"
+description: "AI-powered visual analysis system using Grounding DINO for contextual object detection and Temporal Transformer architecture for risk prediction and temporal data interpretation."
+image: "/projects/arguslens-logo.png"
+techStack: ["Python", "Grounding DINO", "Temporal Transformer", "PyTorch", "Computer Vision", "OpenCV", "NumPy"]
+github: "https://github.com/Weli-byte/arguslens"
+date: "2026-03-10"
+featured: true
+---
+
+ArgusLens is an end-to-end visual intelligence system designed to bridge the gap between raw image data and actionable insight. The core thesis of the project is that AI should not stop at model accuracy — it must be packaged as a complete, user-facing pipeline that ingests real-world visual inputs, processes them through advanced perception models, and delivers interpretable results to a human operator. ArgusLens was built with that full-stack philosophy at every layer.
+
+## Object Detection with Grounding DINO
+
+At the perception layer, ArgusLens uses **Grounding DINO** — a state-of-the-art open-set object detection model that fuses visual and language grounding — to perform contextual scene understanding. Unlike traditional closed-set detectors (YOLO, Faster R-CNN) that can only identify pre-defined object categories, Grounding DINO enables **open-vocabulary detection**: given a text query or a category description, the model can identify and localize objects it was never explicitly trained to detect, by grounding the visual features to language semantics.
+
+This was a deliberate architectural choice. The goal was not to build a narrowly scoped system that only works on a fixed object taxonomy, but to create a flexible perception backbone that can be repurposed for diverse real-world scenarios without retraining — a critical requirement for any scalable visual intelligence product.
+
+## Temporal Analysis with Transformer Architecture
+
+Detecting objects in a single frame is only half the problem. Real-world safety and intelligence systems need to reason about **change over time**: Is a detected object moving toward a restricted zone? Is the density of a crowd increasing? Is an anomaly appearing repeatedly across frames?
+
+To address this, I integrated a **Temporal Transformer architecture** into the pipeline specifically for temporal data interpretation and risk estimation. The Temporal Transformer processes sequences of feature vectors extracted from consecutive frames, applies self-attention across the time dimension to model inter-frame dependencies, and produces risk scores or prediction outputs based on observed trends. This enables the system to perform proactive risk flagging rather than purely reactive detection — a significant capability upgrade for safety-critical applications.
+
+## End-to-End Pipeline Design
+
+The full pipeline was engineered as a cohesive system rather than a collection of disconnected models:
+
+1. **Ingestion Layer:** Raw images or video frames enter the pipeline and are preprocessed (normalization, resizing, color-space handling) using **OpenCV** and **NumPy**.
+2. **Detection Layer:** Grounding DINO performs contextual object detection, outputting bounding boxes, confidence scores, and semantic labels.
+3. **Temporal Layer:** The Temporal Transformer aggregates frame-level detections over a sliding window, computes attention-weighted temporal features, and generates risk or prediction outputs.
+4. **Output Layer:** Results are formatted, annotated, and presented in an interpretable format — visual overlays, structured data outputs, or alerting signals depending on the deployment scenario.
+
+Both the model integration work and the data flow architecture were built from scratch during development, with particular care given to ensuring the output interpretation layer produced results a non-technical operator could act on.
+
+## Goals & Purpose
+
+The primary goal of ArgusLens is to demonstrate that applied AI is not just about model performance on benchmarks — it is about creating **scalable, user-centric products** that solve problems in the real world. Every architectural decision in ArgusLens was made with operational deployment in mind: robustness, interpretability, and adaptability to new scenarios without architectural overhauls.
+
+## Results & Outcomes
+
+The system achieved end-to-end integration of Grounding DINO detection and Temporal Transformer-based risk prediction within a unified pipeline. The combination of open-set detection and temporal reasoning creates a perception system significantly more capable and flexible than standard single-frame detectors, suitable for surveillance, industrial monitoring, and smart environment applications.
+
+## Future Plans
+
+The next development phase focuses on training the Temporal Transformer on larger, domain-specific datasets to improve prediction accuracy and reduce false-positive rates. Additional work will extend the system's adaptation capabilities to new visual analysis scenarios — environmental monitoring, retail analytics, infrastructure inspection — without requiring full pipeline redesign. The long-term vision is a configurable, plug-and-play visual intelligence platform applicable across industries.

@@ -1,0 +1,53 @@
+---
+title: "AI Health System"
+description: "End-to-end AI pipeline for automatic plant disease detection: YOLOv8 leaf detection, EfficientNet-B3 disease classification, and Grad-CAM explainability — served via FastAPI with a React frontend."
+image: "/projects/ai-health-logo.png"
+techStack: ["FastAPI", "YOLOv8", "EfficientNet-B3", "Grad-CAM", "PyTorch", "Python", "React", "OpenCV"]
+github: "https://github.com/Weli-byte/ai-health-system"
+date: "2026-02-20"
+featured: true
+---
+
+AI Health System is a production-grade, end-to-end artificial intelligence pipeline for automatic plant disease detection — designed to provide not just a diagnosis, but an explainable one. The system was built with agricultural applications in mind, where early and accurate disease identification can be the difference between a productive harvest and significant crop loss. Every component of the pipeline was built to be modular, independently testable, and composable into a complete decision-support system.
+
+## Pipeline Architecture
+
+The system processes a plant image through three sequential AI stages, each implemented as an independently testable module:
+
+### Stage 1 — Leaf Detection with YOLOv8
+
+The first stage uses **YOLOv8** — Ultralytics' state-of-the-art real-time object detection model — to detect and precisely localize the leaf region within a raw input image. This is a critical preprocessing step: feeding entire, uncropped images directly into a disease classifier introduces background noise that degrades accuracy. YOLOv8's speed and localization precision make it ideal for this role — it reliably isolates the region of interest even when images contain complex backgrounds, multiple plants, or uneven lighting conditions. The detected leaf region is then cropped and normalized before being passed downstream.
+
+### Stage 2 — Disease Classification with EfficientNet-B3
+
+The cropped leaf image is passed into an **EfficientNet-B3** model for disease classification. EfficientNet-B3 was chosen deliberately: it sits at an optimal point on the accuracy-vs-compute tradeoff curve — significantly outperforming smaller EfficientNet variants on fine-grained texture and color features (both critical for plant disease patterns) while remaining practical enough to run on CPU or modest GPU hardware. The model is trained to distinguish between multiple disease classes (fungal, bacterial, viral infections, and healthy leaves) and outputs a class label with associated confidence scores.
+
+### Stage 3 — Explainability with Grad-CAM
+
+Raw classification outputs are not enough for a real decision-support system — operators need to understand *why* the model made a decision. The third stage applies **Grad-CAM (Gradient-weighted Class Activation Mapping)** to generate visual heatmaps overlaid on the original image, highlighting the specific regions the EfficientNet-B3 model focused on when reaching its classification conclusion. This explainability layer turns a black-box prediction into a transparent, auditable result — allowing agronomists to verify that the model is making decisions based on the correct visual features rather than spurious correlations.
+
+## Backend — FastAPI Service
+
+All three models are loaded into memory at startup and served via a **FastAPI** backend, exposing three distinct, independently callable endpoints:
+
+- **`/detect_leaf`** — Runs YOLOv8 inference and returns the bounding box of the detected leaf region.
+- **`/classify_disease`** — Accepts a cropped leaf image and returns the EfficientNet-B3 disease classification with confidence scores.
+- **`/explain_prediction`** — Generates and returns the Grad-CAM heatmap for a given classification result.
+
+This endpoint decomposition means individual pipeline stages can be tested, benchmarked, and upgraded independently — a crucial architectural advantage when iterating on model quality.
+
+## Frontend
+
+The **React** frontend provides a clean user interface where users upload plant images and view diagnostic results — bounding box overlay, disease label, confidence score, and Grad-CAM heatmap — all rendered in real time without page reloads.
+
+## Goals & Purpose
+
+The primary aim of this project is to enable **early disease detection in agriculture**, reducing yield loss and crop damage by providing farmers and agronomists with a fast, accessible, and trustworthy AI-powered diagnostic tool. The explainability component (Grad-CAM) is not optional — it is a core product requirement, because trust in an AI system in a high-stakes agricultural context depends on transparency.
+
+## Results & Outcomes
+
+The complete end-to-end pipeline — from raw image upload to Grad-CAM explainability output — was successfully implemented and integrated. The three-stage architecture produces reliable, explainable disease diagnoses with a clear separation of concerns that makes the system maintainable and upgradeable.
+
+## Roadmap
+
+Future development focuses on strengthening model performance with larger, more diverse plant disease datasets covering a wider range of crops and disease variants. Additional planned capabilities include real-time video stream analysis, mobile app integration for field use, and deployment to a scalable cloud infrastructure capable of handling production-level traffic from multiple simultaneous users.

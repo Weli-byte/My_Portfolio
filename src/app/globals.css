@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------------------------------------------------------
+ * Design tokens — exposed as CSS variables so Tailwind utilities and inline
+ * styles share the same source of truth. Channels are stored as `R G B`
+ * triplets so we can use Tailwind's `<alpha-value>` syntax.
+ * -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    /* Light mode — kept for reference but site defaults to dark */
+    --color-background: 10 10 10;
+    --color-foreground: 237 240 246;
+    --color-muted: 20 20 20;
+    --color-muted-foreground: 156 163 175;
+    --color-border: 255 255 255;
+    --color-primary-glow: 245 158 11; /* amber-400 */
+
+    /* Amber accent palette */
+    --amber-400: 251 191 36;
+    --amber-500: 245 158 11;
+  }
+
+  .dark {
+    --color-background: 10 10 10;
+    --color-foreground: 237 240 246;
+    --color-muted: 20 20 20;
+    --color-muted-foreground: 156 163 175;
+    --color-border: 255 255 255;
+    --color-primary-glow: 245 158 11;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans text-foreground;
+    background-color: #0a0a0a;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Smooth in-page anchor scrolling, but respect reduced-motion preferences. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  ::selection {
+    background-color: rgba(251, 191, 36, 0.25);
+    color: #fff;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Animated background — glowing orbs that drift slowly. Subtle enough to
+ * not strain the eyes, vibrant enough to feel alive.
+ * -------------------------------------------------------------------------- */
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.animated-bg::before,
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.12;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Large amber orb — drifts top-right */
+.animated-bg::before {
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  background: radial-gradient(ellipse, #f59e0b 0%, #d97706 40%, transparent 70%);
+  top: -15%;
+  right: -10%;
+  animation-name: orb-drift-a;
+  animation-duration: 18s;
+}
+
+/* Smaller amber-gold orb — drifts bottom-left */
+.animated-bg::after {
+  width: 40vw;
+  height: 40vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(ellipse, #fbbf24 0%, #f59e0b 40%, transparent 70%);
+  bottom: -10%;
+  left: -5%;
+  animation-name: orb-drift-b;
+  animation-duration: 22s;
+}
+
+/* Third orb via a child element trick — mid-screen shimmer */
+.animated-bg .orb-mid {
+  position: absolute;
+  width: 35vw;
+  height: 35vw;
+  max-width: 420px;
+  max-height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #78716c 0%, #44403c 50%, transparent 70%);
+  filter: blur(80px);
+  opacity: 0.07;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  animation: orb-drift-c 26s ease-in-out infinite alternate;
+}
+
+/* Floating grid lines overlay */
+.animated-bg .grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-drift 40s linear infinite;
+}
+
+/* Subtle floating particles */
+.animated-bg .particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #fbbf24;
+  opacity: 0;
+  animation: particle-float linear infinite;
+}
+
+@keyframes orb-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-8%, 6%) scale(1.08); }
+  66%  { transform: translate(5%, -4%) scale(0.95); }
+  100% { transform: translate(-4%, 8%) scale(1.05); }
+}
+
+@keyframes orb-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(6%, -8%) scale(1.1); }
+  66%  { transform: translate(-4%, 5%) scale(0.92); }
+  100% { transform: translate(8%, -5%) scale(1.06); }
+}
+
+@keyframes orb-drift-c {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  50%  { transform: translate(-45%, -55%) scale(1.15); }
+  100% { transform: translate(-55%, -45%) scale(0.9); }
+}
+
+@keyframes grid-drift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes particle-float {
+  0%   { transform: translateY(0) scale(0); opacity: 0; }
+  10%  { opacity: 0.6; transform: translateY(-5vh) scale(1); }
+  90%  { opacity: 0.3; }
+  100% { transform: translateY(-80vh) scale(0.5); opacity: 0; }
+}
+
+/* Page content must sit above the animated background */
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+ * Shared dark-themed UI tokens used across all pages
+ * -------------------------------------------------------------------------- */
+
+/* Cards / panels */
+.dark-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.dark-card:hover {
+  border-color: rgba(251, 191, 36, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Amber text utility */
+.text-amber {
+  color: #fbbf24;
+}
+
+/* Tech badge */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  transition: background 0.2s ease;
+}
+
+.tech-badge:hover {
+  background: rgba(251, 191, 36, 0.2);
+}
+

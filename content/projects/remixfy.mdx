@@ -1,0 +1,45 @@
+---
+title: "Remixfy"
+description: "AI-powered rap lyrics and beat generation platform built from scratch. Prompt-based music production with FastAPI backend, React frontend, OpenAI GPT-4.1 for lyrics, and a three-tier MusicGen/Stable Audio/WAV fallback beat pipeline."
+image: "/projects/remixfy-logo.png"
+techStack: ["FastAPI", "React", "OpenAI GPT-4.1", "MusicGen", "PyTorch", "Transformers", "Stable Audio", "Python", "Uvicorn"]
+github: "https://github.com/Weli-byte/remixfy"
+date: "2026-04-15"
+featured: true
+---
+
+Remixfy is a fully prompt-based AI music production platform that I architected and built from the ground up — no templates, no scaffolded boilerplate. The system is built on a **FastAPI** backend paired with a **React (remixfy-ui)** frontend, and at its core it runs two distinct AI-powered production pipelines that work in concert to generate complete musical pieces from nothing but a text prompt.
+
+## Lyrics Engine
+
+The lyrics engine accepts user-defined parameters — topic, mood, energy level, BPM — and applies a multi-step **prompt engineering** pipeline to transform these inputs into richly structured prompts before sending them to **OpenAI's GPT-4.1** model via the API. GPT-4.1 was chosen specifically for its superior instruction-following and stylistic coherence when generating creative text with rhythmic and structural constraints. The output is not just freeform text — it respects verse/chorus/bridge structure, rhyme schemes, flow patterns, and the emotional tone defined by the user's initial parameters. The prompt engineering layer adds context, style anchors, and negative constraints to consistently push the model toward high-quality, performance-ready rap lyrics rather than generic text.
+
+## Beat Production Pipeline — Three-Tier Fallback Architecture
+
+The beat generation system is where the most complex engineering lives. Rather than relying on a single model that could fail under resource constraints or infrastructure limitations, I designed a **three-tier fallback architecture** that ensures the system never fully crashes regardless of environment:
+
+**Tier 1 — MusicGen (Local AI):** In the ideal scenario, a locally running **MusicGen model** (Meta's music generation model, loaded via **PyTorch + Hugging Face Transformers**) takes the prompt and generates music waveforms directly on the machine. This produces the highest quality, most context-aware audio output. MusicGen interprets the mood, genre, and BPM metadata encoded into the prompt to produce beats that actually fit the lyrical content.
+
+**Tier 2 — Stable Audio API:** If local MusicGen inference is unavailable (due to hardware, memory, or environment constraints), the system automatically falls back to the external **Stable Audio API**, a commercial-grade generative audio service. A structured API request is constructed from the same prompt parameters, preserving as much context as possible from the original user input.
+
+**Tier 3 — WAV Fallback:** If both AI generation paths fail (network error, API timeout, rate limiting), the system never returns an error to the user. Instead, it serves either **pre-generated WAV files** or dynamically creates **sine-wave-based WAV fallbacks** that match the requested BPM and mood pattern. This guarantees a working demo under any condition.
+
+The entire pipeline is stabilized with **thread-safe caching**, **TTL (time-to-live) cache invalidation**, **MIME-type awareness** for correct audio serving, and a suite of performance optimizations to keep response times reasonable even under load.
+
+## Development Journey
+
+The development process began locally: setting up **Python 3.13 + virtualenv**, resolving pip dependency conflicts between PyTorch, transformers, and their transitive dependencies, and getting the API running via **Uvicorn**. I validated every endpoint through **Swagger UI** before any integration work — this meant I had real production output (actual generated lyrics and audio) proven before writing a single line of frontend code.
+
+After local validation, I moved the project to **GitHub** and attempted a full **Vercel** deployment. Serverless architecture proved incompatible with the PyTorch/MusicGen stack — the model weights alone exceed serverless RAM and package-size limits by an order of magnitude — which forced an architectural pivot toward the "light backend + fallback" approach that now defines the system.
+
+## Results & Outcomes
+
+The system successfully generates high-quality rap lyrics on demand via GPT-4.1, with the beat fallback stack ensuring 100% uptime across all demo scenarios. The architecture is correctly separated, tested, and ready for the next phase.
+
+## Roadmap
+
+**Short-term:** Deploy the lightweight backend (lyrics + fallback beats) on **Vercel** as a public demo product.
+
+**Medium-term:** Extract beat generation into a dedicated **microservice** on Render or a VPS, where MusicGen can run without serverless constraints — a proper microservice architecture.
+
+**Long-term:** Advance the prompt engineering layer with **style transfer**, **artist embedding**, and real dataset-based beat training to close the quality gap with dedicated audio generation services like Stable Audio — transforming Remixfy from an MVP into a production-grade AI music product. The next phase is not technical — it's product development and monetization.

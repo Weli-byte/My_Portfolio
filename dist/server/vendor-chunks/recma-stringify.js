@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "vendor-chunks/recma-stringify";
+exports.ids = ["vendor-chunks/recma-stringify"];
+exports.modules = {
+
+/***/ "(rsc)/./node_modules/recma-stringify/lib/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/recma-stringify/lib/index.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ recmaStringify)\n/* harmony export */ });\n/* harmony import */ var estree_util_to_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! estree-util-to-js */ \"(rsc)/./node_modules/estree-util-to-js/lib/index.js\");\n/**\n * @import {Program} from 'estree'\n * @import {Options} from 'recma-stringify'\n * @import {Processor} from 'unified'\n * @import {VFile} from 'vfile'\n */\n\n\n\n/**\n * Plugin to add support for serializing as JavaScript.\n *\n * @this {Processor<undefined, undefined, undefined, Program, string>}\n *   Processor instance.\n * @param {Readonly<Options> | null | undefined} [options]\n *   Configuration (optional).\n * @returns {undefined}\n *   Nothing.\n */\nfunction recmaStringify(options) {\n  const self = this\n\n  this.compiler = compiler\n\n  /**\n   * @param {Program} tree\n   *   Tree.\n   * @param {VFile} file\n   *   File.\n   * @returns {string}\n   *   JavaScript.\n   */\n  function compiler(tree, file) {\n    const settings = {...self.data('settings'), ...options}\n    const result = (0,estree_util_to_js__WEBPACK_IMPORTED_MODULE_0__.toJs)(tree, {\n      SourceMapGenerator: settings.SourceMapGenerator,\n      filePath: file.path || 'unknown.js',\n      handlers: settings.handlers\n    })\n\n    file.map = result.map\n\n    return result.value\n  }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvcmVjbWEtc3RyaW5naWZ5L2xpYi9pbmRleC5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBO0FBQ0EsWUFBWSxTQUFTO0FBQ3JCLFlBQVksU0FBUztBQUNyQixZQUFZLFdBQVc7QUFDdkIsWUFBWSxPQUFPO0FBQ25COztBQUVzQzs7QUFFdEM7QUFDQTtBQUNBO0FBQ0EsVUFBVTtBQUNWO0FBQ0EsV0FBVyxzQ0FBc0M7QUFDakQ7QUFDQSxhQUFhO0FBQ2I7QUFDQTtBQUNlO0FBQ2Y7O0FBRUE7O0FBRUE7QUFDQSxhQUFhLFNBQVM7QUFDdEI7QUFDQSxhQUFhLE9BQU87QUFDcEI7QUFDQSxlQUFlO0FBQ2Y7QUFDQTtBQUNBO0FBQ0Esc0JBQXNCO0FBQ3RCLG1CQUFtQix1REFBSTtBQUN2QjtBQUNBO0FBQ0E7QUFDQSxLQUFLOztBQUVMOztBQUVBO0FBQ0E7QUFDQSIsInNvdXJjZXMiOlsid2VicGFjazovL3BvcnRmb2xpby8uL25vZGVfbW9kdWxlcy9yZWNtYS1zdHJpbmdpZnkvbGliL2luZGV4LmpzP2M0NzQiXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBAaW1wb3J0IHtQcm9ncmFtfSBmcm9tICdlc3RyZWUnXG4gKiBAaW1wb3J0IHtPcHRpb25zfSBmcm9tICdyZWNtYS1zdHJpbmdpZnknXG4gKiBAaW1wb3J0IHtQcm9jZXNzb3J9IGZyb20gJ3VuaWZpZWQnXG4gKiBAaW1wb3J0IHtWRmlsZX0gZnJvbSAndmZpbGUnXG4gKi9cblxuaW1wb3J0IHt0b0pzfSBmcm9tICdlc3RyZWUtdXRpbC10by1qcydcblxuLyoqXG4gKiBQbHVnaW4gdG8gYWRkIHN1cHBvcnQgZm9yIHNlcmlhbGl6aW5nIGFzIEphdmFTY3JpcHQuXG4gKlxuICogQHRoaXMge1Byb2Nlc3Nvcjx1bmRlZmluZWQsIHVuZGVmaW5lZCwgdW5kZWZpbmVkLCBQcm9ncmFtLCBzdHJpbmc+fVxuICogICBQcm9jZXNzb3IgaW5zdGFuY2UuXG4gKiBAcGFyYW0ge1JlYWRvbmx5PE9wdGlvbnM+IHwgbnVsbCB8IHVuZGVmaW5lZH0gW29wdGlvbnNdXG4gKiAgIENvbmZpZ3VyYXRpb24gKG9wdGlvbmFsKS5cbiAqIEByZXR1cm5zIHt1bmRlZmluZWR9XG4gKiAgIE5vdGhpbmcuXG4gKi9cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHJlY21hU3RyaW5naWZ5KG9wdGlvbnMpIHtcbiAgY29uc3Qgc2VsZiA9IHRoaXNcblxuICB0aGlzLmNvbXBpbGVyID0gY29tcGlsZXJcblxuICAvKipcbiAgICogQHBhcmFtIHtQcm9ncmFtfSB0cmVlXG4gICAqICAgVHJlZS5cbiAgICogQHBhcmFtIHtWRmlsZX0gZmlsZVxuICAgKiAgIEZpbGUuXG4gICAqIEByZXR1cm5zIHtzdHJpbmd9XG4gICAqICAgSmF2YVNjcmlwdC5cbiAgICovXG4gIGZ1bmN0aW9uIGNvbXBpbGVyKHRyZWUsIGZpbGUpIHtcbiAgICBjb25zdCBzZXR0aW5ncyA9IHsuLi5zZWxmLmRhdGEoJ3NldHRpbmdzJyksIC4uLm9wdGlvbnN9XG4gICAgY29uc3QgcmVzdWx0ID0gdG9Kcyh0cmVlLCB7XG4gICAgICBTb3VyY2VNYXBHZW5lcmF0b3I6IHNldHRpbmdzLlNvdXJjZU1hcEdlbmVyYXRvcixcbiAgICAgIGZpbGVQYXRoOiBmaWxlLnBhdGggfHwgJ3Vua25vd24uanMnLFxuICAgICAgaGFuZGxlcnM6IHNldHRpbmdzLmhhbmRsZXJzXG4gICAgfSlcblxuICAgIGZpbGUubWFwID0gcmVzdWx0Lm1hcFxuXG4gICAgcmV0dXJuIHJlc3VsdC52YWx1ZVxuICB9XG59XG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/recma-stringify/lib/index.js\n");
+
+/***/ })
+
+};
+;

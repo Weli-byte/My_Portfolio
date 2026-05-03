@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://veliparlak.com
+Sitemap: https://veliparlak.com/sitemap.xml
