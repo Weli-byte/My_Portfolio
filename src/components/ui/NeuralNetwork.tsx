@@ -28,7 +28,7 @@ function createNode(width: number, height: number): Node {
     vx: (Math.random() - 0.5) * 0.4,
     vy: (Math.random() - 0.5) * 0.4,
     radius: Math.random() * 2.5 + 1.5,
-    color: NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)] || NEON_COLORS[0],
+    color: (NEON_COLORS[Math.floor(Math.random() * NEON_COLORS.length)] || NEON_COLORS[0]) as string,
     pulsePhase: Math.random() * Math.PI * 2,
     pulseSpeed: 0.02 + Math.random() * 0.02,
   };
